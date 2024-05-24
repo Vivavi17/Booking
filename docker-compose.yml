@@ -1,0 +1,75 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres:15
+    restart: always
+    container_name: bookings_db
+    env_file:
+      - .env-no-dev
+    ports:
+      - "8001:5432"
+
+  redis:
+    image: redis:7
+    container_name: redis_db
+  
+  booking:
+    container_name: booking_image
+    build:
+      context: .
+    env_file:
+      - .env-no-dev
+    depends_on:
+      - db
+      - redis
+    command: ["/booking/docker/app.sh"]
+    ports:
+      - "7777:8000"
+
+  celery:
+    build:
+      context: .
+    container_name: celery_bookings
+    command: sh -c "celery --app=tasks.celery_app:celery_app worker -l INFO"
+    env_file:
+      - .env-no-dev
+    depends_on:
+      - redis
+
+  flower:
+    build:
+      context: .
+    container_name: flower_bookings
+    command: sh -c "celery --app=tasks.celery_app:celery_app flower"
+    env_file:
+      - .env-no-dev
+    depends_on:
+      - redis
+    ports:
+      - "5555:5555"
+
+  prometheus:
+    image: prom/prometheus:v2.43.0
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheusdata:/prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:9.4.7
+    container_name: grafana
+    volumes:
+      - grafanadata:/var/lib/grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    
+volumes:
+  postgresdata:
+  grafanadata:
+  prometheusdata:
