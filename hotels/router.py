@@ -4,7 +4,7 @@ from datetime import date
 from fastapi import APIRouter
 from fastapi_cache.decorator import cache
 
-from exceptions import CannotBookHotelForLongPeriod, DateFromCannotBeAfterDateTo
+from exceptions import CannotBookHotelForLongPeriod, DateFromCannotBeAfterDateTo, HotelNotFound
 from hotels.dao import HotelDAO
 from hotels.schemas import Hotel
 
@@ -13,7 +13,10 @@ router = APIRouter(prefix="/hotels", tags=["Отели и номера"])
 
 @router.get("/id/{hotel_id}")
 async def find_by_id(hotel_id: int) -> Hotel:
-    return await HotelDAO.find_by_id(hotel_id)
+    result = await HotelDAO.find_by_id(hotel_id)
+    if not result:
+        raise HotelNotFound
+    return result
 
 
 @router.get("/{location}")

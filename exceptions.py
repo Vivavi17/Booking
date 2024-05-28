@@ -66,3 +66,8 @@ class CannotAddDataToDatabase(BookingException):
 class CannotProcessCSV(BookingException):
     status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
     detail = "Не удалось обработать CSV файл"
+
+
+class HotelNotFound(BookingException):
+    status_code = status.HTTP_404_NOT_FOUND
+    detail = "Не удалось найти отель с заданным hotel_id"
