@@ -2,6 +2,17 @@ version: '3.9'
 
 services:
 
+  nginx:
+    build:
+      context: .
+      dockerfile: "Dockerfile.nginx"
+    container_name: booking_nginx
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - booking
+
   db:
     image: postgres:15
     restart: always
@@ -25,8 +36,8 @@ services:
       - db
       - redis
     command: ["/booking/docker/app.sh"]
-    ports:
-      - "7777:8000"
+    # ports:
+    #   - "7777:8000"
 
   celery:
     build:
@@ -47,8 +58,8 @@ services:
       - .env-no-dev
     depends_on:
       - redis
-    ports:
-      - "5555:5555"
+    # ports:
+    #   - "5555:5555"
 
   prometheus:
     image: prom/prometheus:v2.43.0
@@ -57,8 +68,8 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheusdata:/prometheus
     restart: unless-stopped
-    ports:
-      - "9090:9090"
+  #   ports:
+  #     - "9090:9090"
 
   grafana:
     image: grafana/grafana:9.4.7
@@ -66,8 +77,8 @@ services:
     volumes:
       - grafanadata:/var/lib/grafana
     restart: unless-stopped
-    ports:
-      - "3000:3000"
+  #   ports:
+  #     - "3000:3000"
     
 volumes:
   postgresdata:
