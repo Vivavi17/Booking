@@ -1,6 +1,5 @@
 venv
 .env
-.env-non-dev
 .env-no-dev
 .env-render
 __pycache__
