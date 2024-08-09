@@ -29,11 +29,3 @@ class UsersDAO(BaseDAO):
             )
             result = await session.execute(query)
         return result.mappings().all()
-
-    # @classmethod
-    # async def orm(cls):
-    #     async with async_session_maker() as session:
-    #         query = select(Users
-    #                 ).options(selectinload(Users.bookings))
-    #         result = await session.execute(query)
-    #     return result.scalars().all()

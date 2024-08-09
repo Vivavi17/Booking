@@ -1,6 +1,6 @@
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
 
-from sqlalchemy import JSON, Column, Computed, Date, ForeignKey, Integer, String
+from sqlalchemy import JSON, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import Base

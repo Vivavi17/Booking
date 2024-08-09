@@ -4,7 +4,11 @@ from datetime import date
 from fastapi import APIRouter
 from fastapi_cache.decorator import cache
 
-from exceptions import CannotBookHotelForLongPeriod, DateFromCannotBeAfterDateTo, HotelNotFound
+from exceptions import (
+    CannotBookHotelForLongPeriod,
+    DateFromCannotBeAfterDateTo,
+    HotelNotFound,
+)
 from hotels.dao import HotelDAO
 from hotels.schemas import Hotel
 
@@ -28,5 +32,4 @@ async def find_by_locate_date(
         raise DateFromCannotBeAfterDateTo
     if (date_to - date_from).days > 30:
         raise CannotBookHotelForLongPeriod
-    # await asyncio.sleep(3)
     return await HotelDAO.find_by_locate_date(location, date_from, date_to)

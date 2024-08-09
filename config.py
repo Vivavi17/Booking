@@ -11,11 +11,11 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASS: str
     DB_NAME: str
-    # TEST_DB_HOST: str
-    # TEST_DB_PORT: int
-    # TEST_DB_USER: str
-    # TEST_DB_PASS: str
-    # TEST_DB_NAME: str
+    TEST_DB_HOST: str
+    TEST_DB_PORT: int
+    TEST_DB_USER: str
+    TEST_DB_PASS: str
+    TEST_DB_NAME: str
     SECRET_KEY: str
     ALGORITHM: str
     REDIS_HOST: str

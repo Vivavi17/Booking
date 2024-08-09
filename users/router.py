@@ -37,8 +37,3 @@ async def logout(response: Response):
 @router.get("/me")
 async def me(user: Users = Depends(curr_user)):
     return user
-
-
-# @router.get('/orm')
-# async def orm():
-#     return await UsersDAO.orm()

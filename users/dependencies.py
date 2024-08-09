@@ -1,5 +1,3 @@
-from datetime import UTC, datetime
-
 from fastapi import Depends, Request
 from jose import JWTError, jwt
 

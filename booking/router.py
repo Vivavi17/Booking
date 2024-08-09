@@ -16,7 +16,7 @@ router = APIRouter(prefix="/bookings", tags=["Бронирование"])
 
 
 @router.get("")
-# @version(2)
+@version(2)
 async def get_bookings(user: Users = Depends(curr_user)) -> list[UsersBookings]:
     res = await BookingDAO.find_all(user_id=user.id)
     return res

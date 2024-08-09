@@ -48,14 +48,6 @@ async def prepare_database():
         await session.commit()
 
 
-# @pytest.fixture(scope="session")
-# def event_loop():
-#     policy = asyncio.get_event_loop_policy()
-#     loop = policy.new_event_loop()
-#     yield loop
-#     loop.close()
-
-
 @pytest.fixture()
 async def ac():
     async with AsyncClient(app=app_fastapi, base_url="http://test") as ac:
